@@ -16,21 +16,21 @@ BASE_BACKOFF_SEC = 3       # リトライ間隔の基準秒数
 
 # 取得したいフィールド一覧
 FIELDS = [
-    "timestamp",             # 取得日時
-    "url",                   # 取得URL
-    "name",                  # 名称
-    "tel",                   # 電話番号
-    "prefecture",            # 都道府県
-    "address",               # 住所
-    "industry",              # 業種
-    "corporate_number",      # 法人番号
-    "representative",        # 代表者
-    "capital",               # 資本金
-    "sales",                 # 売上
-    "employees",             # 従業員数
-    "founded_date",          # 設立日
-    "business_description",  # 事業内容
-    "homepage",              # ホームページ
+    "取得日時",
+    "取得URL",
+    "名称",
+    "電話番号",
+    "都道府県",
+    "住所",
+    "業種",
+    "法人番号",
+    "代表者",
+    "資本金",
+    "売上",
+    "従業員数",
+    "設立日",
+    "事業内容",
+    "HP",
 ]
 
 # DOM セレクタで拾うフィールド（今回のHTMLでは name くらいに留める）
