@@ -272,12 +272,14 @@ def save_to_csv(rows, filepath):
 
 
 if __name__ == "__main__":
-    # テスト用に1件だけURLを入れておく
-    company_urls = [
-        # サンエス警備保障株式会社（あなたが使っているページ）
-        "https://www.baitoru.com/cjlist255197/",
-        # 実運用ではここに他の企業ページURLを追加していく
-    ]
+    # fetch_info_baitoru.py が出力した company_urls.csv から企業ページURLを読み込む
+    company_urls = []
+    with open("company_urls.csv", newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            url = row.get("company_url")
+            if url:
+                company_urls.append(url)
 
     results = scrape_many_company_pages(company_urls)
     save_to_csv(results, "company_data.csv")
