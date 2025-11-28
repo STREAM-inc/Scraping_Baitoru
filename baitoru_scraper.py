@@ -184,48 +184,48 @@ def scrape_company_page(url):
     soup = BeautifulSoup(html, "html.parser")
 
     data = {}
-    data["timestamp"] = datetime.now().isoformat(timespec="seconds")
-    data["url"] = url
+    data["取得日時"] = datetime.now().isoformat(timespec="seconds")
+    data["取得URL"] = url
 
     # 会社名（analyticsData → h1 の順で試す）
     analytics = parse_analytics_data_from_head(soup)
     raw_name = analytics.get("prop61")
     if raw_name:
         # 末尾の「のバイト/アルバイト/パートの求人情報」を消す簡易処理
-        data["name"] = raw_name.replace("のバイト/アルバイト/パートの求人情報", "")
+        data["名称"] = raw_name.replace("のバイト/アルバイト/パートの求人情報", "")
     else:
-        data["name"] = safe_get_text_from_selectors(soup, SELECTORS.get("name", []))
+        data["名称"] = safe_get_text_from_selectors(soup, SELECTORS.get("name", []))
 
     # 所在地（住所）
     address = get_value_by_label(soup, "所在地")
-    data["address"] = address
+    data["住所"] = address
 
     # 都道府県（住所から抽出）
-    data["prefecture"] = extract_prefecture(address)
+    data["都道府県"] = extract_prefecture(address)
 
     # 設立年
-    data["founded_date"] = get_value_by_label(soup, "設立年")
+    data["設立日"] = get_value_by_label(soup, "設立年")
 
     # 資本金
-    data["capital"] = get_value_by_label(soup, "資本金")
+    data["資本金"] = get_value_by_label(soup, "資本金")
 
     # 代表者名
-    data["representative"] = get_value_by_label(soup, "代表者名")
+    data["代表者"] = get_value_by_label(soup, "代表者名")
 
     # 従業員数
-    data["employees"] = get_value_by_label(soup, "従業員数")
+    data["従業員数"] = get_value_by_label(soup, "従業員数")
 
     # 事業内容
-    data["business_description"] = get_value_by_label(soup, "事業内容")
+    data["事業内容"] = get_value_by_label(soup, "事業内容")
 
     # ホームページ（URL）
-    data["homepage"] = get_value_by_label(soup, "URL", prefer_link=True)
+    data["HP"] = get_value_by_label(soup, "URL", prefer_link=True)
 
     # このHTML片には無いものは None にしておく
-    data["tel"] = None
-    data["industry"] = None
-    data["corporate_number"] = None
-    data["sales"] = None
+    data["電話番号"] = None
+    data["業種"] = None
+    data["法人番号"] = None
+    data["売上"] = None
 
     return data
 
@@ -280,4 +280,4 @@ if __name__ == "__main__":
     ]
 
     results = scrape_many_company_pages(company_urls)
-    save_to_csv(results, "companies.csv")
+    save_to_csv(results, "company_data.csv")
